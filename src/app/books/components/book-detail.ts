@@ -5,17 +5,17 @@ import { Book } from '../models/book';
   selector: 'book-detail',
   template: `
     <div *ngIf="book">
-      <div-group>
+      <div>
         <div>{{ title }}</div>
-        <div-subtitle *ngIf="subtitle">{{ subtitle }}</div-subtitle>
+        <div *ngIf="subtitle">{{ subtitle }}</div>
         <img div-sm-image *ngIf="thumbnail" [src]="thumbnail"/>
-      </div-group>
+      </div>
       <div>
         <p [innerHtml]="description"></p>
       </div>
-      <div-footer class="footer">
+      <div class="footer">
         <book-authors [book]="book"></book-authors>
-      </div-footer>
+      </div>
       <div align="start">
         <button mat-raised-button color="warn" *ngIf="inCollection" (click)="remove.emit(book)">
         Remove Book from Collection
@@ -38,7 +38,7 @@ import { Book } from '../models/book';
     div {
       max-width: 600px;
     }
-    div-group {
+    div {
       margin-left: 0;
     }
     img {
@@ -52,7 +52,7 @@ import { Book } from '../models/book';
     div {
       margin: 25px 0 0 !important;
     }
-    div-footer {
+    div {
       padding: 0 25px 25px;
       position: relative;
     }

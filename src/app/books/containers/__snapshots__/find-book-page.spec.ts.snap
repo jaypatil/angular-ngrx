@@ -143,12 +143,12 @@ exports[`Find Book Page should compile 1`] = `
         
       
       
-      <div-footer
+      <div
         _ngcontent-c0=""
-        class="div-footer"
+        class="div"
       >
         
-      </div-footer>
+      </div>
     </div>
     
     

@@ -9,25 +9,29 @@ import { Authenticate } from '../models/user';
       <div>Login</div>
       <div>
         <form [formGroup]="form" (ngSubmit)="submit()">
-          <div>
-            <div>
-              <input type="text"  placeholder="Username" formControlName="username">
-            </div>
-          </div>
-
-          <div>
-            <div>
-              <input type="password"  placeholder="Password" formControlName="password">
-            </div>
-          </div>
-
-          <div *ngIf="errorMessage" class="loginError">
-            {{ errorMessage }}
-          </div>
-
-          <div class="loginButtons">
-            <button type="submit" button>Login</button>
-          </div>
+        <div class="imgcontainer">
+          <img src="assets/image/img_avatar.png" alt="Avatar" class="avatar">
+        </div>
+        <div class="container">
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username" name="uname"  formControlName="username">
+    
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" formControlName="password">
+        <div *ngIf="errorMessage" class="loginError">
+        {{ errorMessage }}
+      </div>
+        <button type="submit">Login</button>
+        <label>
+          <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+      </div>
+    
+      <div class="container" style="background-color:#f1f1f1">
+        <button type="button" class="cancelbtn">Cancel</button>
+        <span class="psw">Forgot <a href="#">password?</a></span>
+      </div>
+        
 
         </form>
       </div>
@@ -35,34 +39,68 @@ import { Authenticate } from '../models/user';
   `,
   styles: [
     `
-    :host {
-      display: flex;
-      justify-content: center;
-      margin: 72px 0;
+    :host {font-family: Arial, Helvetica, sans-serif;}
+    form {border: 3px solid #f1f1f1;}
+
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
     }
 
-    .mat-form-field {
-      width: 100%;
-      min-width: 300px;
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
     }
 
-    div,
-    div {
-      display: flex;
-      justify-content: center;
+    button:hover {
+        opacity: 0.8;
     }
 
+    .cancelbtn {
+        width: auto;
+        padding: 10px 18px;
+        background-color: #f44336;
+    }
+
+    .imgcontainer {
+        text-align: center;
+        margin: 24px 0 12px 0;
+    }
+
+    img.avatar {
+        width: 40%;
+        border-radius: 50%;
+    }
+
+    .container {
+        padding: 16px;
+    }
+
+    span.psw {
+        float: right;
+        padding-top: 16px;
+    }
     .loginError {
-      padding: 16px;
-      width: 300px;
-      color: white;
-      background-color: red;
+      color: red;
     }
-
-    .loginButtons {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-end;
+    /* Change styles for span and cancel button on extra small screens */
+    @media screen and (max-width: 300px) {
+        span.psw {
+          display: block;
+          float: none;
+        }
+        .cancelbtn {
+          width: 100%;
+        }
     }
   `,
   ],
@@ -86,9 +124,9 @@ export class LoginFormComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   submit() {
     if (this.form.valid) {

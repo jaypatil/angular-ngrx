@@ -9,21 +9,21 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
         <div>
           <input matInput placeholder="Search for a book" [value]="query" (keyup)="search.emit($event.target.value)">
         </div>
-        <mat-spinner [class.show]="searching" [diameter]="30" [strokeWidth]="3"></mat-spinner>
+        Loading...
       </div>
-      <div-footer><span *ngIf="error">{{error}}</span></div-footer>
+      <div><span *ngIf="error">{{error}}</span></div>
     </div>
   `,
   styles: [
     `
     div,
     div,
-    div-footer {
+    div {
       display: flex;
       justify-content: center;
     }
 
-    div-footer {
+    div {
       color: #FF0000;
       padding: 5px 0;
     }

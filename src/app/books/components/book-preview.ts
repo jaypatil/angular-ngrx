@@ -6,17 +6,17 @@ import { Book } from '../models/book';
   template: `
     <a [routerLink]="['/books', id]">
       <div>
-        <div-group>
+        <div>
           <img div-sm-image *ngIf="thumbnail" [src]="thumbnail"/>
           <div>{{ title | bcEllipsis:35 }}</div>
-          <div-subtitle *ngIf="subtitle">{{ subtitle | bcEllipsis:40 }}</div-subtitle>
-        </div-group>
+          <div *ngIf="subtitle">{{ subtitle | bcEllipsis:40 }}</div>
+        </div>
         <div>
           <p *ngIf="description">{{ description | bcEllipsis }}</p>
         </div>
-        <div-footer>
+        <div>
           <book-authors [book]="book"></book-authors>
-        </div-footer>
+        </div>
       </div>
     </a>
   `,
@@ -49,7 +49,7 @@ import { Book } from '../models/book';
     div {
       margin-right: 10px;
     }
-    div-group {
+    div {
       margin: 0;
     }
     a {
@@ -69,7 +69,7 @@ import { Book } from '../models/book';
       display: inline-block;
       font-size: 13px;
     }
-    div-footer {
+    div {
       padding: 0 25px 25px;
     }
   `,
