@@ -11,19 +11,21 @@ import { CheckOutComponent } from './containers/checkout.component';
 import { AddressPageComponent } from './containers/address-page.component';
 import { CheckOutRoutingModule } from './checkout-routing.module';
 
+import { AddressPageEffects } from './effects/address-page.effects';
+import { reducers } from './reducers';
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsModule,
-    CheckOutRoutingModule
+    CheckOutRoutingModule,
     /**
      * StoreModule.forFeature is used for composing state
      * from feature modules. These modules can be loaded
      * eagerly or lazily and will be dynamically added to
      * the existing state.
      */
-    // StoreModule.forFeature('books', reducers),
+    StoreModule.forFeature('addressState', reducers),
 
     /**
      * Effects.forFeature is used to register effects
@@ -33,7 +35,7 @@ import { CheckOutRoutingModule } from './checkout-routing.module';
      * All Effects will only be instantiated once regardless of
      * whether they are registered once or multiple times.
      */
-    // EffectsModule.forFeature([BookEffects, CollectionEffects]),
+    EffectsModule.forFeature([AddressPageEffects]),
   ],
   declarations: [
     CheckOutComponent,

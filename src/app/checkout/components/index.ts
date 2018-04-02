@@ -8,12 +8,12 @@ import { PipesModule } from '../../shared/pipes';
 
 import { PaymentFormComponent } from './payment-form.component';
 import { OrderSummaryComponent } from './order-summary.component';
-import { AddressFormComponent } from './address-form.component';
+import { AddressPageComponent } from './address-form.component';
 
 export const COMPONENTS = [
   PaymentFormComponent,
   OrderSummaryComponent,
-  AddressFormComponent
+  AddressPageComponent
 ];
 
 @NgModule({

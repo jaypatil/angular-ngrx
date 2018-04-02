@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { CheckOut } from '../models/checkout';
+import { Address } from '../models/address';
 
 @Component({
   selector: 'address-form',
@@ -113,7 +113,7 @@ import { CheckOut } from '../models/checkout';
   `,
   ],
 })
-export class AddressFormComponent implements OnInit {
+export class AddressPageComponent implements OnInit {
   @Input()
   set pending(isPending: boolean) {
     if (isPending) {
@@ -125,11 +125,18 @@ export class AddressFormComponent implements OnInit {
 
   @Input() errorMessage: string | null;
 
-  @Output() submitted = new EventEmitter<CheckOut>();
+  @Output() submitted = new EventEmitter<Address>();
 
   form: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
+    name: new FormControl(''),
+    mobile: new FormControl(''),
+    pincode: new FormControl(''),
+    addressLine1: new FormControl(''),
+    addressLine2: new FormControl(''),
+    addressLine3: new FormControl(''),
+    city: new FormControl(''),
+    state: new FormControl(''),
+    isShippingAddress: new FormControl(''),
   });
 
   constructor() { }

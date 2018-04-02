@@ -1,34 +1,40 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
+
+  <label for="fname">
+    <i class="fa fa-user"></i> Full Name</label>
+  <input type="text" id="fname" name="firstname" placeholder="John M. Doe" formControlName="name">
+
+  <label for="mobile">
+    <i class="fa fa-user"></i>Mobile</label>
+  <input type="text" id="mobile" name="mobile" placeholder="9876543210" formControlName="mobile">
+
+  <label for="zip">Zip</label>
+  <input type="text" id="zip" name="zip" placeholder="10001">
+
+  <label for="adr1">
+    <i class="fa fa-address-card-o"></i>Flat, House No., Building, Company, Apartment</label>
+  <input type="text" id="adr1" name="address1" placeholder="542 W. 15th Street" formControlName="addressLine1">
+
+  <label for="adr2">
+    <i class="fa fa-address-card-o"></i> Area, Colony, Street, Sector, Village </label>
+  <input type="text" id="adr2" name="address2" placeholder="Sudama Nagar" formControlName="addressLine2">
+
+  <label for="adr3">
+    <i class="fa fa-address-card-o"></i>Landmark</label>
+  <input type="text" id="adr3" name="address2" placeholder="Near Apollo Hospital" formControlName="addressLine3">
+
+  <label for="city">
+    <i class="fa fa-institution"></i> Town/City</label>
+  <input type="text" id="city" name="city" placeholder="New York" formControlName="city">
+
   <div class="row">
     <div class="col-50">
-      <h3>Billing Address</h3>
-      <label for="fname">
-        <i class="fa fa-user"></i> Full Name</label>
-      <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
-      <label for="email">
-        <i class="fa fa-envelope"></i> Email</label>
-      <input type="text" id="email" name="email" placeholder="john@example.com">
-      <label for="adr">
-        <i class="fa fa-address-card-o"></i> Address</label>
-      <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
-      <label for="city">
-        <i class="fa fa-institution"></i> City</label>
-      <input type="text" id="city" name="city" placeholder="New York">
-
-      <div class="row">
-        <div class="col-50">
-          <label for="state">State</label>
-          <input type="text" id="state" name="state" placeholder="NY">
-        </div>
-        <div class="col-50">
-          <label for="zip">Zip</label>
-          <input type="text" id="zip" name="zip" placeholder="10001">
-        </div>
-      </div>
+      <label for="state">State</label>
+      <input type="text" id="state" name="state" placeholder="NY" formControlName="state">
     </div>
   </div>
   <label>
-    <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+    <input type="checkbox" checked="checked" name="sameadr" formControlName="state"> Shipping address same as billing
   </label>
   <input type="submit" value="Continue to checkout" class="btn">
 </form>
