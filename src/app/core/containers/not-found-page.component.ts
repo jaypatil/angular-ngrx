@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'not-found-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
