@@ -3,6 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Authenticate } from '../models/user';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'login-form',
   template: `
     <div>

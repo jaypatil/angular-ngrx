@@ -7,10 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { DBModule } from './database/database';
-import {
-  StoreRouterConnectingModule,
-  RouterStateSerializer,
-} from '@ngrx/router-store';
+import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { CoreModule } from './core/core.module';
@@ -26,7 +23,9 @@ import { AppRoutingModule } from './app-routing.module';
 @NgModule({
   imports: [
     CommonModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({
+      appId: 'angular'
+    }),
     BrowserAnimationsModule,
     HttpClientModule,
     AuthModule.forRoot(),
@@ -49,7 +48,7 @@ import { AppRoutingModule } from './app-routing.module';
         They stateKey defines the name of the state used by the router-store reducer.
         This matches the key defined in the map of reducers
       */
-      stateKey: 'router',
+      stateKey: 'router'
     }),
 
     /**
@@ -64,7 +63,7 @@ import { AppRoutingModule } from './app-routing.module';
      */
     StoreDevtoolsModule.instrument({
       name: 'NgRx Book Store DevTools',
-      logOnly: environment.production,
+      logOnly: environment.production
     }),
 
     /**
@@ -82,8 +81,8 @@ import { AppRoutingModule } from './app-routing.module';
      */
     DBModule.provideDB(schema),
 
-    CoreModule.forRoot(),
+    CoreModule.forRoot()
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}
