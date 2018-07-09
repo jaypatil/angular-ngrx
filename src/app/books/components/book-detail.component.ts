@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Book } from '../models/book';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'book-detail',
   template: `
     <div *ngIf="book">

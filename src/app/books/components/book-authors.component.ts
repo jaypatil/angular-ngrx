@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { Book } from '../models/book';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'book-authors',
   template: `
     <h5>Written By:</h5>

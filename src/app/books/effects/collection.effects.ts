@@ -3,7 +3,7 @@ import { Database } from '../../database/database';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 import { defer, Observable, of } from 'rxjs';
-import { catchError, map, mergeMap, switchMap, toArray } from 'rxjs/operators';
+import { catchError, map, flatMap, switchMap, toArray } from 'rxjs/operators';
 
 import { Book } from '../models/book';
 import {
@@ -53,7 +53,7 @@ export class CollectionEffects {
   addBookToCollection$: Observable<Action> = this.actions$.pipe(
     ofType<AddBook>(CollectionActionTypes.AddBook),
     map(action => action.payload),
-    mergeMap(book =>
+    flatMap(book =>
       this.db
         .insert('books', [book])
         .pipe(
@@ -67,7 +67,7 @@ export class CollectionEffects {
   removeBookFromCollection$: Observable<Action> = this.actions$.pipe(
     ofType<RemoveBook>(CollectionActionTypes.RemoveBook),
     map(action => action.payload),
-    mergeMap(book =>
+    flatMap(book =>
       this.db
         .executeWrite('books', 'delete', [book.id])
         .pipe(

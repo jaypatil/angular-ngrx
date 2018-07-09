@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { Observer } from 'rxjs';
 import { Subscriber } from 'rxjs';
 import { Subject } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { flatMap } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
 import { from } from 'rxjs';
@@ -138,7 +138,7 @@ export class Database {
   get(storeName: string, key: any): Observable<any> {
     const open$ = this.open(this._schema.name);
 
-    return mergeMap.call(open$, (db: IDBDatabase) => {
+    return flatMap.call(open$, (db: IDBDatabase) => {
       return new Observable((txnObserver: Observer<any>) => {
         const recordSchema = this._schema.stores[storeName];
         const mapper = this._mapRecord(recordSchema);
@@ -170,7 +170,7 @@ export class Database {
   query(storeName: string, predicate?: (rec: any) => boolean): Observable<any> {
     const open$ = this.open(this._schema.name);
 
-    return mergeMap.call(open$, (db: IDBDatabase) => {
+    return flatMap.call(open$, (db: IDBDatabase) => {
       return new Observable((txnObserver: Observer<any>) => {
         const txn = db.transaction([storeName], IDB_TXN_READ);
         const objectStore = txn.objectStore(storeName);
@@ -213,7 +213,7 @@ export class Database {
     const changes = this.changes;
     const open$ = this.open(this._schema.name);
 
-    return mergeMap.call(open$, (db: IDBDatabase) => {
+    return flatMap.call(open$, (db: IDBDatabase) => {
       return new Observable((txnObserver: Observer<any>) => {
         const recordSchema = this._schema.stores[storeName];
         const mapper = this._mapRecord(recordSchema);
@@ -247,7 +247,7 @@ export class Database {
           });
         };
 
-        const requestSubscriber = mergeMap.call(from(records), makeRequest).subscribe(txnObserver);
+        const requestSubscriber = flatMap.call(from(records), makeRequest).subscribe(txnObserver);
 
         return () => {
           requestSubscriber.unsubscribe();
@@ -264,7 +264,7 @@ export class Database {
 }
 
 @NgModule({
-  providers: [Database, { provide: DatabaseBackend, useFactory: getIDBFactory }]
+  providers: [Database, { provide: DatabaseBackend, useFactory: () => (typeof window !== 'undefined' ? window.indexedDB : self.indexedDB) }]
 })
 export class DBModule {
   static provideDB(schema: DBSchema): ModuleWithProviders {

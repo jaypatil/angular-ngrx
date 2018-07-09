@@ -20,6 +20,8 @@ import { AppComponent } from './core/containers/app.component';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 
+import { WINDOW_PROVIDERS } from './services/window.service';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -83,6 +85,7 @@ import { AppRoutingModule } from './app-routing.module';
 
     CoreModule.forRoot()
   ],
+  providers: [WINDOW_PROVIDERS],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
