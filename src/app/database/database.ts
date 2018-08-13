@@ -46,24 +46,15 @@ export class Database {
     this._schema = schema;
     this._idb = idbBackend;
   }
-  // private _mapRecord(objectSchema);
-  // private _upgradeDB(observer, db);
-  // private _createObjectStore(db, key, schema);
-  // open(dbName: string, version?: number, upgradeHandler?: DBUpgradeHandler): Observable<IDBDatabase>;
-  // deleteDatabase(dbName: string): Observable<any>;
-  // insert(storeName: string, records: any[], notify?: boolean): Observable<any>;
-  // get(storeName: string, key: any): Observable<any>;
-  // query(storeName: string, predicate?: (rec: any) => boolean): Observable<any>;
-  // executeWrite(storeName: string, actionType: string, records: any[]): Observable<any>;
-  // compare(a: any, b: any): number;
 
+  // private _mapRecord(objectSchema);
   private _mapRecord = objectSchema => dbResponseRec => {
     if (!objectSchema.primaryKey) {
       dbResponseRec.record['$key'] = dbResponseRec['$key'];
     }
     return dbResponseRec.record;
   };
-
+  // private _upgradeDB(observer, db);
   private _upgradeDB = (observer, db) => {
     this._schema.stores.map(storeName => {
       if (db.objectStoreNames.contains(storeName)) {
@@ -74,7 +65,7 @@ export class Database {
     observer.next(db);
     observer.complete();
   };
-
+  // private _createObjectStore(db, key, schema);
   private _createObjectStore = (db, key, schema) => {
     const objectStore = db.createObjectStore(key, { autoIncrement: true, keyPath: schema.primaryKey });
   };
@@ -108,6 +99,7 @@ export class Database {
       };
     });
   };
+  // deleteDatabase(dbName: string): Observable<any>;
 
   deleteDatabase = (dbName: string): Observable<any> => {
     return Observable.create(function(deletionObserver) {
@@ -128,18 +120,19 @@ export class Database {
     });
   };
 
+  // insert(storeName: string, records: any[], notify?: boolean): Observable<any>;
   insert = (storeName: string, records: any[], notify?: boolean): Observable<any> => {
     if (notify === void 0) {
       notify = true;
     }
     const write$ = this.executeWrite(storeName, 'put', records);
-    //return _do.call(write$, function(payload) {
-    return _do.call(write$, function(payload) {
+    return mergeMap.call(write$, function(payload) {
       return notify ? this.changes.next({ type: DB_INSERT, payload: payload }) : {};
     });
   };
+  // get(storeName: string, key: any): Observable<any>;
 
-  get = (storeName, key) => {
+  get = (storeName: string, key: any): Observable<any> => {
     const open$ = this.open(this._schema.name);
     return mergeMap.call(open$, function(db) {
       return Observable.create(function(txnObserver) {
@@ -170,7 +163,9 @@ export class Database {
       });
     });
   };
-  query = (storeName, predicate) => {
+
+  // query(storeName: string, predicate?: (rec: any) => boolean): Observable<any>;
+  query = (storeName: string, predicate?: (rec: any) => boolean): Observable<any> => {
     const open$ = this.open(this._schema.name);
     return mergeMap.call(open$, function(db) {
       return new Observable(function(txnObserver) {
@@ -208,7 +203,9 @@ export class Database {
     });
   };
 
-  executeWrite = (storeName, actionType, records) => {
+  // executeWrite(storeName: string, actionType: string, records: any[]): Observable<any>;
+
+  executeWrite = (storeName: string, actionType: string, records: any[]): Observable<any> => {
     const changes = this.changes;
     const open$ = this.open(this._schema.name);
     return mergeMap.call(open$, function(db) {
@@ -254,7 +251,7 @@ export class Database {
       });
     });
   };
-
+  // compare(a: any, b: any): number;
   compare = (a, b) => {
     return this._idb.cmp(a, b);
   };
