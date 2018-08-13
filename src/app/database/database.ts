@@ -6,10 +6,6 @@ import { tap } from 'rxjs/operators';
 
 import { InjectionToken, ModuleWithProviders, Inject, Injectable, NgModule } from '@angular/core';
 
-// export declare const DB_INSERT = "DB_INSERT";
-// export declare const DatabaseBackend: InjectionToken<{}>;
-// export declare const IDB_SCHEMA: InjectionToken<{}>;
-
 const IDB_SUCCESS = 'success';
 const IDB_COMPLETE = 'complete';
 const IDB_ERROR = 'error';
@@ -36,12 +32,13 @@ export interface DBSchema {
   };
 }
 // export declare function getIDBFactory(): IDBFactory;
+@Injectable()
 export class Database {
   changes: Subject<any>;
   private _idb;
   private _schema;
 
-  constructor(idbBackend: any, schema: any) {
+  constructor(@Inject(DatabaseBackend) idbBackend: any, @Inject(IDB_SCHEMA) schema: any) {
     this.changes = new Subject();
     this._schema = schema;
     this._idb = idbBackend;
@@ -54,6 +51,7 @@ export class Database {
     }
     return dbResponseRec.record;
   };
+
   // private _upgradeDB(observer, db);
   private _upgradeDB = (observer, db) => {
     this._schema.stores.map(storeName => {
@@ -65,6 +63,7 @@ export class Database {
     observer.next(db);
     observer.complete();
   };
+
   // private _createObjectStore(db, key, schema);
   private _createObjectStore = (db, key, schema) => {
     const objectStore = db.createObjectStore(key, { autoIncrement: true, keyPath: schema.primaryKey });
@@ -99,8 +98,8 @@ export class Database {
       };
     });
   };
-  // deleteDatabase(dbName: string): Observable<any>;
 
+  // deleteDatabase(dbName: string): Observable<any>;
   deleteDatabase = (dbName: string): Observable<any> => {
     return Observable.create(function(deletionObserver) {
       const deleteRequest = this._idb.deleteDatabase(dbName);
